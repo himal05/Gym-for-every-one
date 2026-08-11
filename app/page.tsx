@@ -8,7 +8,12 @@ const programs = [
   { number: "03", title: "Foundation 12", text: "A 12-week beginner path for technique, mobility and long-term confidence." },
 ];
 
-const disciplines = ["Chest", "Back", "Shoulders", "Arms", "Legs", "Core", "Cardio", "Mobility"];
+const disciplines = [
+  { name: "Chest", slug: "chest" }, { name: "Back", slug: "back" },
+  { name: "Shoulders", slug: "shoulders" }, { name: "Arms", slug: "arms" },
+  { name: "Legs", slug: "legs" }, { name: "Core", slug: "core" },
+  { name: "Cardio", slug: "cardio" }, { name: "Mobility", slug: "mobility" },
+];
 
 const schedule = [
   { day: "MON", name: "Strength Lab", time: "6:00 AM", level: "Intermediate" },
@@ -124,7 +129,7 @@ export default function Home() {
           <h2>MASTER THE<br /><em>MOVEMENT.</em></h2>
           <p>Clear technique cues, target muscles, breathing, common mistakes and smart variations—organized so every athlete can train with intent.</p>
           <div className="discipline-grid">
-            {disciplines.map((item, index) => <a href="#contact" key={item}><span>0{index + 1}</span>{item}<b>↗</b></a>)}
+            {disciplines.map((item, index) => <a href={`/training/${item.slug}`} key={item.slug}><span>0{index + 1}</span>{item.name}<b>↗</b></a>)}
           </div>
         </div>
       </section>
@@ -139,6 +144,7 @@ export default function Home() {
             <li><b>02</b><span><strong>Verified information</strong>Product and nutrient data is clearly sourced and admin-reviewed.</span></li>
             <li><b>03</b><span><strong>Safety first</strong>Educational estimates, transparent limits, no guaranteed outcomes.</span></li>
           </ul>
+          <a className="primary-btn nutrition-btn" href="/nutrition/protein-plans">Explore 30 protein recipes <span>→</span></a>
         </div>
         <div className="nutrition-image"></div>
       </section>
