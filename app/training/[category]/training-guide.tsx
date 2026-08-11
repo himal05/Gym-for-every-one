@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { categories, type TrainingCategory } from "../../data/training";
+import { categories, exerciseSlug, type TrainingCategory } from "../../data/training";
 
 export function TrainingGuide({ category }: { category: TrainingCategory }) {
   const [lang, setLang] = useState<"en" | "ne">("en");
@@ -33,13 +33,13 @@ export function TrainingGuide({ category }: { category: TrainingCategory }) {
         <div className="guide-section-head"><p className="section-kicker">{ne ? "५ मुख्य व्यायाम" : "5 foundational exercises"}</p><h2>{ne ? "सही फर्म।\nस्मार्ट प्रगति।" : "QUALITY REPS.\nSMART PROGRESS."}</h2></div>
         <div className="exercise-table">
           {category.exercises.map((exercise, index) => (
-            <article className="exercise-row" key={exercise.nameEn}>
+            <a className="exercise-row" href={`/training/${category.slug}/${exerciseSlug(exercise.nameEn)}`} key={exercise.nameEn}>
               <span className="exercise-number">0{index + 1}</span>
               <div><small>{ne ? "व्यायाम" : "Exercise"}</small><h3>{ne ? exercise.nameNe : exercise.nameEn}</h3></div>
               <div><small>{ne ? "मुख्य मांसपेशी" : "Main target"}</small><p>{ne ? exercise.targetNe : exercise.targetEn}</p></div>
               <div><small>{ne ? "कोचिङ संकेत" : "Coaching cue"}</small><p>{ne ? exercise.cueNe : exercise.cueEn}</p></div>
               <strong>{exercise.prescription}</strong>
-            </article>
+            </a>
           ))}
         </div>
         <div className="safety-note"><b>{ne ? "सुरक्षा:" : "Safety:"}</b> {ne ? "दुखाइ, चक्कर, छाती दुख्ने वा असामान्य सास फेर्न गाह्रो भए रोक्नुहोस्। नयाँ वा लगातार दुखाइका लागि योग्य स्वास्थ्यकर्मीको सल्लाह लिनुहोस्।" : "Stop for pain, dizziness, chest pain or unusual breathlessness. Seek qualified assessment for new or persistent symptoms."}</div>

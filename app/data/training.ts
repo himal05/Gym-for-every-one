@@ -128,3 +128,26 @@ function toExercise(values: string[]): Exercise {
 export function getCategory(slug: string) {
   return categories.find((category) => category.slug === slug);
 }
+
+export function exerciseSlug(name: string) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
+export function getExercise(categorySlug: string, slug: string) {
+  const category = getCategory(categorySlug);
+  const exercise = category?.exercises.find((item) => exerciseSlug(item.nameEn) === slug);
+  return category && exercise ? { category, exercise } : undefined;
+}
+
+export function exerciseEquipment(name: string) {
+  const lower = name.toLowerCase();
+  if (lower.includes("dumbbell") || lower.includes("lateral") || lower.includes("front raise") || lower.includes("rear-delt") || lower.includes("hammer")) return ["Dumbbells", "डम्बेल"];
+  if (lower.includes("barbell") || lower.includes("bench press") || lower.includes("overhead press") || lower.includes("romanian")) return ["Barbell / rack", "बारबेल / र्‍याक"];
+  if (lower.includes("cable") || lower.includes("pulldown") || lower.includes("pushdown") || lower.includes("pallof")) return ["Cable machine", "केबल मेसिन"];
+  if (lower.includes("cycling")) return ["Bicycle / exercise bike", "साइकल / एक्सरसाइज बाइक"];
+  if (lower.includes("rowing machine")) return ["Rowing machine", "रोइङ मेसिन"];
+  if (lower.includes("rope")) return ["Jump rope", "डोरी"];
+  if (lower.includes("leg press")) return ["Leg-press machine", "लेग प्रेस मेसिन"];
+  if (lower.includes("preacher")) return ["Curl bench + bar", "कर्ल बेन्च + बार"];
+  return ["Body weight / open space", "शरीरको तौल / खुला ठाउँ"];
+}

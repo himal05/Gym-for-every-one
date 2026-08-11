@@ -52,6 +52,7 @@ export default function Home() {
           <a href="#training" onClick={() => setMenuOpen(false)}>Training</a>
           <a href="#nutrition" onClick={() => setMenuOpen(false)}>Nutrition</a>
           <a href="#schedule" onClick={() => setMenuOpen(false)}>Schedule</a>
+          <a href="/locations" onClick={() => setMenuOpen(false)}>Find nearby</a>
           <a href="#membership" onClick={() => setMenuOpen(false)}>Membership</a>
         </nav>
         <a className="header-cta" href="#contact">Start now <span>↗</span></a>
@@ -182,6 +183,11 @@ export default function Home() {
         <div className="membership-visual"><div><strong>4</strong><span>WAYS TO<br />TRAIN</span></div><p>Free · Basic · Premium · Elite</p></div>
       </section>
 
+      <section className="location-preview section-pad">
+        <div><p className="section-kicker">Nepal activity finder</p><h2>FIND YOUR<br /><em>PLACE TO MOVE.</em></h2><p>Search gyms, indoor games, children’s activities, sports grounds and entertainment across all seven provinces—with district, municipality, ward and GPS options.</p><a className="primary-btn" href="/locations">Open activity map <span>→</span></a></div>
+        <div className="location-preview-card"><span>EXAMPLE SEARCH</span><strong>Bagmati</strong><i>→</i><strong>Makwanpur</strong><i>→</i><strong>Hetauda–19</strong><small>Google Maps + GPS</small></div>
+      </section>
+
       <section className="contact section-pad" id="contact">
         <p className="section-kicker">Ready when you are</p>
         <h2>YOUR STRONGER LIFE<br /><em>STARTS TODAY.</em></h2>
@@ -191,7 +197,7 @@ export default function Home() {
       <footer>
         <a className="brand" href="#top"><span className="brand-mark">H</span><span>HIMAL <b>GYM</b></span></a>
         <p>Train smart. Eat smart. Live strong.</p>
-        <div><a href="#training">Training</a><a href="#nutrition">Nutrition</a><a href="#membership">Membership</a></div>
+        <div><a href="#training">Training</a><a href="#nutrition">Nutrition</a><a href="/locations">Find nearby</a></div>
         <small>© 2026 Himal Gym. Educational fitness information only.</small>
       </footer>
 
