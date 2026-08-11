@@ -16,8 +16,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title,
     description,
-    openGraph: { title, description, type: "website", images: [{ url: `${origin}/og.jpg`, width: 1536, height: 909, alt: "Himal Gym — Forge the stronger you" }] },
-    twitter: { card: "summary_large_image", title, description, images: [`${origin}/og.jpg`] },
+    openGraph: { title, description, type: "website", images: [{ url: `${origin}/og-classes.png`, width: 1630, height: 965, alt: "Himal Gym coach-led small group strength training" }] },
+    twitter: { card: "summary_large_image", title, description, images: [`${origin}/og-classes.png`] },
   };
 }
 

@@ -1,6 +1,9 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import ClassCard from "./components/classes/ClassCard";
+import ClassSchedule from "./components/classes/ClassSchedule";
+import { classPrograms } from "./data/classes";
 
 const programs = [
   { number: "01", title: "Strength / Hypertrophy", text: "Progressive programming built around the big lifts, smart volume and complete recovery." },
@@ -13,13 +16,6 @@ const disciplines = [
   { name: "Shoulders", slug: "shoulders" }, { name: "Arms", slug: "arms" },
   { name: "Legs", slug: "legs" }, { name: "Core", slug: "core" },
   { name: "Cardio", slug: "cardio" }, { name: "Mobility", slug: "mobility" },
-];
-
-const schedule = [
-  { day: "MON", name: "Strength Lab", time: "6:00 AM", level: "Intermediate" },
-  { day: "TUE", name: "Functional HIIT", time: "5:30 PM", level: "All levels" },
-  { day: "WED", name: "Mobility Flow", time: "7:00 AM", level: "Beginner" },
-  { day: "THU", name: "Lower Body", time: "5:30 PM", level: "Intermediate" },
 ];
 
 export default function Home() {
@@ -46,15 +42,18 @@ export default function Home() {
           <span>HIMAL <b>GYM</b></span>
         </a>
         <nav className={menuOpen ? "nav-links open" : "nav-links"} aria-label="Main navigation">
-          <a href="#programs" onClick={() => setMenuOpen(false)}>Programs</a>
-          <a href="#video" onClick={() => setMenuOpen(false)}>Video</a>
-          <a href="#training" onClick={() => setMenuOpen(false)}>Training</a>
+          <a href="#top" onClick={() => setMenuOpen(false)}>Home</a>
+          <a href="#about" onClick={() => setMenuOpen(false)}>About</a>
+          <a href="#classes" onClick={() => setMenuOpen(false)}>Classes</a>
+          <a href="#training" onClick={() => setMenuOpen(false)}>Exercises</a>
           <a href="#nutrition" onClick={() => setMenuOpen(false)}>Nutrition</a>
-          <a href="#schedule" onClick={() => setMenuOpen(false)}>Schedule</a>
-          <a href="/locations" onClick={() => setMenuOpen(false)}>Find nearby</a>
-          <a href="#membership" onClick={() => setMenuOpen(false)}>Membership</a>
+          <a href="#programs" onClick={() => setMenuOpen(false)}>Personal training</a>
+          <a href="#class-schedule" onClick={() => setMenuOpen(false)}>Schedule</a>
+          <a href="#video" onClick={() => setMenuOpen(false)}>Gallery</a>
+          <a href="#calculator" onClick={() => setMenuOpen(false)}>Calculator</a>
+          <a href="#contact" onClick={() => setMenuOpen(false)}>Contact</a>
         </nav>
-        <a className="header-cta" href="#contact">Start now <span>↗</span></a>
+        <a className="header-cta" href="/book-class">Book consultation <span>↗</span></a>
         <button className="menu-button" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle navigation" aria-expanded={menuOpen}>
           <span></span><span></span>
         </button>
@@ -77,7 +76,7 @@ export default function Home() {
         <div className="scroll-note">SCROLL TO EXPLORE <span>↓</span></div>
       </section>
 
-      <section className="manifesto section-pad">
+      <section className="manifesto section-pad" id="about">
         <p className="section-kicker">Our mentality</p>
         <h2>DISCIPLINE IS BUILT<br />ONE REP AT A TIME.</h2>
         <div className="manifesto-grid">
@@ -165,12 +164,12 @@ export default function Home() {
         </form>
       </section>
 
-      <section className="schedule section-pad" id="schedule">
-        <div className="section-head"><div><p className="section-kicker">This week</p><h2>SHOW UP.<br /><em>GET BETTER.</em></h2></div><p>Small group energy, focused coaching and a place for every fitness level.</p></div>
-        <div className="schedule-list">
-          {schedule.map((item) => <div className="schedule-row" key={item.day}><b>{item.day}</b><h3>{item.name}</h3><span>{item.time}</span><small>{item.level}</small><a href="#contact" aria-label={`Book ${item.name}`}>↗</a></div>)}
-        </div>
+      <section className="small-group section-pad" id="classes">
+        <div className="section-head"><div><p className="section-kicker">Coach-led classes</p><h2>SMALL GROUP<br /><em>TRAINING.</em></h2></div><p>Small-group energy, focused coaching, and a place for every fitness level. Show up. Get better.</p></div>
+        <div className="class-card-grid">{classPrograms.map((program, index) => <ClassCard program={program} index={index} key={program.slug} />)}</div>
       </section>
+
+      <ClassSchedule />
 
       <section className="membership section-pad" id="membership">
         <div className="membership-panel">
