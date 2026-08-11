@@ -43,6 +43,7 @@ export default function Home() {
         </a>
         <nav className={menuOpen ? "nav-links open" : "nav-links"} aria-label="Main navigation">
           <a href="#programs" onClick={() => setMenuOpen(false)}>Programs</a>
+          <a href="#video" onClick={() => setMenuOpen(false)}>Video</a>
           <a href="#training" onClick={() => setMenuOpen(false)}>Training</a>
           <a href="#nutrition" onClick={() => setMenuOpen(false)}>Nutrition</a>
           <a href="#schedule" onClick={() => setMenuOpen(false)}>Schedule</a>
@@ -62,7 +63,7 @@ export default function Home() {
           <p className="hero-text">Smart training. Evidence-aware nutrition. A focused community built to help you move, feel and live stronger.</p>
           <div className="hero-actions">
             <a className="primary-btn" href="#programs">Start training <span>→</span></a>
-            <a className="text-btn" href="#calculator"><i>▶</i> Explore your plan</a>
+            <a className="text-btn" href="#video"><i>▶</i> Watch our video</a>
           </div>
         </div>
         <div className="hero-portrait" role="img" aria-label="Himal, strength coach, holding dumbbells"></div>
@@ -79,6 +80,26 @@ export default function Home() {
           <p>Himal Gym brings structured exercise, practical nutrition guidance and useful fitness tools into one premium experience—without miracle claims or guesswork.</p>
           <div className="signature">Himal<br /><span>Head Coach</span></div>
         </div>
+      </section>
+
+      <section className="video-section section-pad" id="video">
+        <div className="video-heading">
+          <div>
+            <p className="section-kicker">Himal Gym motivation</p>
+            <h2>LION<br /><em>MENTALITY.</em></h2>
+          </div>
+          <p>Press play. Bring that focus into every set, every meal and every decision.</p>
+        </div>
+        <div className="video-frame">
+          <iframe
+            src="https://www.youtube-nocookie.com/embed/ERClHCOF14c?rel=0"
+            title="Lion Mentality — Himal Gym motivational video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
+        </div>
+        <a className="youtube-link" href="https://www.youtube.com/watch?v=ERClHCOF14c" target="_blank" rel="noreferrer">Open video on YouTube <span>↗</span></a>
       </section>
 
       <section className="programs section-pad" id="programs">
