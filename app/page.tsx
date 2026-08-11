@@ -24,7 +24,6 @@ const schedule = [
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [unit, setUnit] = useState<"metric" | "imperial">("metric");
   const [bmi, setBmi] = useState<number | null>(null);
 
   function calculateBmi(event: FormEvent<HTMLFormElement>) {
@@ -33,7 +32,7 @@ export default function Home() {
     const height = Number(data.get("height"));
     const weight = Number(data.get("weight"));
     if (!height || !weight) return;
-    const value = unit === "metric" ? weight / ((height / 100) ** 2) : (weight * 703) / (height ** 2);
+    const value = weight / ((height / 100) ** 2);
     setBmi(Math.round(value * 10) / 10);
   }
 
@@ -158,8 +157,8 @@ export default function Home() {
           <div className="calculator-pills"><span>BMI</span><span>Calories</span><span>Protein</span><span>Macros</span><span>Water</span></div>
         </div>
         <form className="bmi-card" onSubmit={calculateBmi}>
-          <div className="bmi-top"><div><small>QUICK TOOL</small><h3>BMI calculator</h3></div><div className="unit-toggle"><button type="button" className={unit === "metric" ? "active" : ""} onClick={() => setUnit("metric")}>Metric</button><button type="button" className={unit === "imperial" ? "active" : ""} onClick={() => setUnit("imperial")}>Imperial</button></div></div>
-          <div className="fields"><label>Height <span>{unit === "metric" ? "cm" : "in"}</span><input name="height" type="number" min="1" step="0.1" placeholder={unit === "metric" ? "175" : "69"} required /></label><label>Weight <span>{unit === "metric" ? "kg" : "lb"}</span><input name="weight" type="number" min="1" step="0.1" placeholder={unit === "metric" ? "70" : "154"} required /></label></div>
+          <div className="bmi-top"><div><small>QUICK TOOL</small><h3>BMI calculator</h3></div><div className="metric-badge">CM + KG</div></div>
+          <div className="fields"><label>Height <span>cm</span><input name="height" type="number" min="1" step="0.1" placeholder="175" required /></label><label>Weight <span>kg</span><input name="weight" type="number" min="1" step="0.1" placeholder="70" required /></label></div>
           <button className="calculate-btn" type="submit">Calculate my BMI <span>→</span></button>
           <div className="bmi-result" aria-live="polite"><small>{bmiLabel}</small><strong>{bmi ?? "—"}</strong><div className="bmi-scale"><i></i><i></i><i></i><i></i></div></div>
           <p className="fine-print">Educational estimate only. Talk with a qualified professional for individualized health guidance.</p>

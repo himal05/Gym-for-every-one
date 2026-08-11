@@ -1,15 +1,29 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { type CSSProperties, useMemo, useState } from "react";
 import { proteinMeals } from "../../data/protein-plans";
+import { pdcaasFoods } from "../../data/pdcaas";
 
 const tiers = ["60–70 g", "100–120 g", "120+ g"] as const;
 
 export default function ProteinPlansPage() {
   const [lang, setLang] = useState<"en" | "ne">("en");
   const [tier, setTier] = useState<(typeof tiers)[number]>("60–70 g");
+  const [foodSearch, setFoodSearch] = useState("");
+  const [selectedFood, setSelectedFood] = useState(pdcaasFoods[0]);
   const ne = lang === "ne";
   const meals = useMemo(() => proteinMeals.filter((meal) => meal.tier === tier), [tier]);
+  const matchingFoods = useMemo(() => {
+    const term = foodSearch.trim().toLowerCase();
+    return term ? pdcaasFoods.filter((food) => `${food.nameEn} ${food.nameNe}`.toLowerCase().includes(term)) : pdcaasFoods;
+  }, [foodSearch]);
+
+  function changeFoodSearch(value: string) {
+    setFoodSearch(value);
+    const term = value.trim().toLowerCase();
+    const match = term ? pdcaasFoods.find((food) => `${food.nameEn} ${food.nameNe}`.toLowerCase().includes(term)) : undefined;
+    if (match) setSelectedFood(match);
+  }
 
   return (
     <main className="protein-page">
@@ -38,6 +52,28 @@ export default function ProteinPlansPage() {
           <article><small>19:30</small><h3>{ne ? "बेलुका" : "Dinner"}</h3><p>{ne ? "पनीर/दाल/मासु + रोटी वा आलु + साग" : "Paneer/dal/meat + roti or potato + greens"}</p></article>
         </div>
         <div className="protein-safety-banner"><strong>{ne ? "महत्त्वपूर्ण:" : "Important:"}</strong><p>{ne ? "यहाँका ग्रामहरू पूरा रेसिपीको अनुमान हुन्। १०० ग्रामभन्दा माथिका सबै विकल्प बहु-भाग ब्याच हुन्—एकैपटक खाने लक्ष्य होइन। ब्रान्ड, काँचो/पाकेको तौल र भागअनुसार वास्तविक प्रोटिन फरक हुन्छ; लेबल वा विश्वसनीय खाद्य डाटाबेसबाट पुनःगणना गर्नुहोस्।" : "Protein grams are estimates for the entire recipe. Every option above 100 g is a multi-serving batch—not a one-sitting target. Actual protein varies by brand, raw/cooked weight and portion; recalculate from labels or a reliable food database."}</p></div>
+      </section>
+
+      <section className="pdcaas-section section-pad" id="pdcaas">
+        <div className="pdcaas-heading"><div><p className="section-kicker">{ne ? "प्रोटिन गुणस्तर उपकरण" : "Protein quality tool"}</p><h2>{ne ? "खाना छान्नुहोस्।\nस्कोर बुझ्नुहोस्।" : "CHOOSE A FOOD.\nREAD THE SCORE."}</h2></div><p>{ne ? "PDCAAS ले प्रोटिनको पाचनयोग्यता र आवश्यक एमिनो एसिडको ढाँचा तुलना गर्छ। यो खानामा कति ग्राम प्रोटिन छ भन्ने मापन होइन।" : "PDCAAS compares protein digestibility and the pattern of essential amino acids. It does not measure how many grams of protein a food contains."}</p></div>
+        <div className="pdcaas-tool">
+          <article className="pdcaas-result" aria-live="polite">
+            <small>{ne ? "चयन गरिएको खाना" : "Selected food"}</small>
+            <h3>{ne ? selectedFood.nameNe : selectedFood.nameEn}</h3>
+            <div className="score-ring" style={{ "--score": `${selectedFood.score * 100}%` } as CSSProperties}><strong>{selectedFood.score.toFixed(2)}</strong><span>/ 1.00</span></div>
+            <b>{selectedFood.score >= .9 ? (ne ? "उच्च गुणस्तर" : "High quality") : selectedFood.score >= .6 ? (ne ? "मध्यम स्कोर" : "Moderate score") : (ne ? "कम स्कोर" : "Lower score")}</b>
+            <p>{ne ? selectedFood.noteNe : selectedFood.noteEn}</p>
+          </article>
+          <div className="pdcaas-browser">
+            <label htmlFor="food-search">{ne ? "खानाको नाम लेख्नुहोस्" : "Type a food name"}</label>
+            <input id="food-search" value={foodSearch} onChange={(event) => changeFoodSearch(event.target.value)} placeholder={ne ? "जस्तै: अण्डा, दूध, दाल…" : "Try egg, milk, lentils…"} />
+            <div className="pdcaas-list">
+              {matchingFoods.map((food) => <button type="button" className={selectedFood.nameEn === food.nameEn ? "active" : ""} onClick={() => setSelectedFood(food)} key={food.nameEn}><span><b>{ne ? food.nameNe : food.nameEn}</b><small>{food.group}</small></span><i style={{ "--bar": `${food.score * 100}%` } as CSSProperties}></i><strong>{food.score.toFixed(2)}</strong></button>)}
+              {!matchingFoods.length && <p>{ne ? "यो नाम भेटिएन। अर्को खाना खोज्नुहोस्।" : "No matching food. Try another name."}</p>}
+            </div>
+          </div>
+        </div>
+        <div className="pdcaas-note"><strong>{ne ? "स्कोरको सीमा" : "Important limitation"}</strong><p>{ne ? "यी सामान्य प्रकाशित मान हुन्; प्रशोधन, उत्पादन र परीक्षण विधिअनुसार फरक हुन सक्छन्। PDCAAS १.०० मा सीमित हुन्छ र FAO ले नयाँ मूल्याङ्कनका लागि DIAAS सिफारिस गरेको छ।" : "These are typical published values and can vary by processing, product and method. PDCAAS is capped at 1.00, and FAO recommends DIAAS for newer protein-quality evaluation."}</p><div><a href="https://www.fao.org/ag/humannutrition/35978-02317b979a686a57aa4593304ffc17f06.pdf" target="_blank" rel="noreferrer">FAO protein-quality report ↗</a><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11011482/" target="_blank" rel="noreferrer">Published PDCAAS table ↗</a></div></div>
       </section>
 
       <section className="recipe-section section-pad" id="recipes">
